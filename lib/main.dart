@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Future<void> _pickFile() async {
+  void _pickFile() async {
     //opens storage to pick files and the picked file or files are assigned into result and if no file is choosen result is null.
     //you can also toggle "allowMultiple" true or false depending on your need
     final result = await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -15,10 +15,14 @@ class MyApp extends StatelessWidget {
     //if no file is picked
     if (result == null) return;
 
-    //we will log the name, size and path of the first picked file (if multiple are selected)
-    print(result.files.first.name);
-    print(result.files.first.size);
-    print(result.files.first.path);
+    //we get the file from result object
+    final file = result.files.first;
+
+    _openFile(file);
+  }
+
+  void _openFile(PlatformFile file) {
+    OpenFile.open(file.path);
   }
 
   @override
